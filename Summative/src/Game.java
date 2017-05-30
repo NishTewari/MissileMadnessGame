@@ -115,6 +115,14 @@ public class Game extends JComponent {
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
             
+            if(leftPressed){
+                player.x = player.x - 5;
+            }
+            if(rightPressed){
+                player.x = player.x + 5;
+            }
+            
+            
             
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
@@ -170,13 +178,25 @@ public class Game extends JComponent {
         // if a key has been pressed down
         @Override
         public void keyPressed(KeyEvent e){
+            if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                leftPressed = true;
+            } 
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                rightPressed = true;
+            }
+            
             
         }
         
         // if a key has been released
         @Override
         public void keyReleased(KeyEvent e){
-            
+             if(e.getKeyCode() == KeyEvent.VK_LEFT){
+                leftPressed = false;
+            } 
+            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+                rightPressed = false;
+            }
         }
     }
     
@@ -191,4 +211,13 @@ public class Game extends JComponent {
         // starts the game loop
         game.run();
     }
+    
+    public void collision(){
+        
+    }
+    
+    
+    
+    
+    
 }
