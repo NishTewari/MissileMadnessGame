@@ -83,7 +83,7 @@ public class Game extends JComponent {
         
         g.drawRect(player.x, player.y, player.width, player.height);
         
-         g.drawRect(285, 300, 50, 10);
+         g.drawRect(285, 300, 310, 100);
         
         
         
