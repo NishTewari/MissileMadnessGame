@@ -36,7 +36,7 @@ public class Game extends JComponent {
     boolean leftPressed;
     boolean rightPressed;
     
-
+ 
     // GAME VARIABLES END HERE   
 
     
@@ -83,6 +83,10 @@ public class Game extends JComponent {
         
         g.drawRect(player.x, player.y, player.width, player.height);
         
+         g.drawRect(285, 300, 50, 10);
+        
+        
+        
         // GAME DRAWING ENDS HERE
     }
 
@@ -115,6 +119,12 @@ public class Game extends JComponent {
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
             
+            chaotic(10);
+            
+            collisions();
+            
+            
+            
             if(leftPressed){
                 player.x = player.x - 5;
             }
@@ -122,7 +132,7 @@ public class Game extends JComponent {
                 player.x = player.x + 5;
             }
             
-            
+           
             
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
@@ -212,11 +222,29 @@ public class Game extends JComponent {
         game.run();
     }
     
-    public void collision(){
+    public void collisions(){
+        if(player.x <=170){
+            player.x = 170;
+        }
         
+        if(player.x + 200 >=WIDTH){
+            player.x = player.x - 5;
+        }
     }
     
-    
+     public void chaotic(int Num) {
+
+        for (int i = 0; i < Num; i++) {
+            //random Equation
+            int randNum = (int) (Math.random() * (5 - 1 + 1)) + 1;
+            //print Asterisks
+            for (int j = 0; j < randNum; j++) {
+
+            }
+            //space
+            System.out.println("");
+        }
+    }
     
     
     
