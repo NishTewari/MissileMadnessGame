@@ -4,22 +4,17 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.util.Random;
 
 /**
  *
  * @author tewan2657
  */
-
-
-//170  , 650
-public class Game extends JComponent {
+public class NewClass_2 extends JComponent {
 
     // Height and Width of our game
     static final int WIDTH = 800;
@@ -33,30 +28,17 @@ public class Game extends JComponent {
     long desiredFPS = 60;
     long desiredTime = (1000) / desiredFPS;
 
-    
-    Random generator = new Random();
-    
-     //(MAX + 1 - MIN) + MIN
-    int randX = generator.nextInt(650 + 1  - 170) +  170;
-    
-    //int randY = generator.nextInt();
-    
-    
+
     // YOUR GAME VARIABLES WOULD GO HERE
-    Rectangle player = new Rectangle(395, 585, 50, 10);
+
     
-    boolean leftPressed;
-    boolean rightPressed;
-    
-    
-    int y = 300;
- 
+
     // GAME VARIABLES END HERE   
 
     
     // Constructor to create the Frame and place the panel in
     // You will learn more about this in Grade 12 :)
-    public Game(){
+    public NewClass_2(){
         // creates a windows to show my game
         JFrame frame = new JFrame(title);
 
@@ -90,21 +72,6 @@ public class Game extends JComponent {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
-        //170 & 650
-        //player at 495
-        //BORDER
-        g.drawRect(150, 0, 20, 600);
-        g.drawRect(650, 0, 20, 600);
-        
-        
-        //Barrier Blocks 
-        g.drawRect(randX, y, 50, 50);
-        g.drawRect(randX, y, 50, 50);
-        
-        //PLAYER
-        g.drawRect(player.x, player.y, player.width, player.height);
-        
-        
         
         
         // GAME DRAWING ENDS HERE
@@ -138,26 +105,7 @@ public class Game extends JComponent {
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
-     
-            collisions();
             
-            
-            //When left key pressed move to the left 
-            if(leftPressed){
-                player.x = player.x - 5;
-            }
-            // when right key pressed move to the right 
-            if(rightPressed){
-                player.x = player.x + 5;
-            } 
-            
-            y += 5;
-            //Randomly reset the ball to another location 
-            if(y > HEIGHT){
-                y = 0;
-                getRandom();
-            }
-           
             
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
@@ -213,30 +161,14 @@ public class Game extends JComponent {
         // if a key has been pressed down
         @Override
         public void keyPressed(KeyEvent e){
-            if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                leftPressed = true;
-            } 
-            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                rightPressed = true;
-            }
-            
             
         }
         
         // if a key has been released
         @Override
         public void keyReleased(KeyEvent e){
-             if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                leftPressed = false;
-            } 
-            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                rightPressed = false;
-            }
+            
         }
-    }
-    
-    public void getRandom(){
-        randX = generator.nextInt(650 + 1  - 170) +  170;
     }
     
     
@@ -245,31 +177,9 @@ public class Game extends JComponent {
      */
     public static void main(String[] args) {
         // creates an instance of my game
-        Game game = new Game();
+        NewClass_2 game = new NewClass_2();
                 
         // starts the game loop
         game.run();
     }
-    
-    public void collisions(){
-        //player can not exceed Border 1 at 170 
-        if(player.x <=170){
-            player.x = 170;
-        }
-        // player can not exceed Border 2 at 650 
-        if(player.x + 200 >=WIDTH){
-            player.x = player.x - 5;
-        }
-        
-      
-        
-    }
-    
-    }
-    
-    
-    
-    
-    
-    
-
+}
