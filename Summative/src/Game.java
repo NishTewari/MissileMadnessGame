@@ -42,7 +42,7 @@ public class Game extends JComponent {
     Random generator = new Random();
     
      //(MAX + 1 - MIN) + MIN
-    int randX = generator.nextInt(650 + 1  - 170) +  170;
+    int randX = generator.nextInt(550 + 1  - 170) +  170;
     
     //int randY = generator.nextInt();
     
@@ -100,8 +100,9 @@ public class Game extends JComponent {
         //170 & 650
         //player at 495
         //BORDER
-        g.drawRect(150, 0, 20, 600);
-        g.drawRect(650, 0, 20, 600);
+        g.setColor(Color.RED);
+        g.fillRect(150, 0, 20, 600);
+        g.fillRect(650, 0, 20, 600);
         
         
         //Barrier Blocks 
