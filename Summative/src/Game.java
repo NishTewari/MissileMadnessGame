@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -33,7 +34,11 @@ public class Game extends JComponent {
     long desiredFPS = 60;
     long desiredTime = (1000) / desiredFPS;
 
+    //GAME VARIABLES START HERE
     
+    private int score = 0;
+    private int life = 3;
+
     Random generator = new Random();
     
      //(MAX + 1 - MIN) + MIN
@@ -45,12 +50,14 @@ public class Game extends JComponent {
     // YOUR GAME VARIABLES WOULD GO HERE
     Rectangle player = new Rectangle(395, 585, 50, 10);
     
+    
     boolean leftPressed;
     boolean rightPressed;
     
-    
     int y = 300;
- 
+    
+    
+    
     // GAME VARIABLES END HERE   
 
     
@@ -99,11 +106,15 @@ public class Game extends JComponent {
         
         //Barrier Blocks 
         g.drawRect(randX, y, 50, 50);
-        g.drawRect(randX, y, 50, 50);
         
         //PLAYER
         g.drawRect(player.x, player.y, player.width, player.height);
         
+        
+        //Score
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("serif", Font.BOLD, 25));
+        g.drawString("" + score, 590, 30);
         
         
         
@@ -264,6 +275,19 @@ public class Game extends JComponent {
       
         
     }
+    
+    public void hits(){
+       Rectangle brick = new Rectangle(randX, y, 50, 50); 
+        
+        if(player.intersects(brick)){
+            
+            score = score + 100;
+            
+        }
+        
+    }
+    
+    
     
     }
     
