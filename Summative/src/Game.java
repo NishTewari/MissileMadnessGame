@@ -125,8 +125,13 @@ public class Game extends JComponent {
         
         //Score
         g.setColor(Color.BLACK);
-        g.setFont(new Font("serif", Font.BOLD, 25));
+        g.setFont(new Font("Arial", Font.BOLD, 25));
         g.drawString("" + score, 590, 30);
+        
+        //Lives
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 25));
+         g.drawString("Lives: " + life, 670, 30);
         
         
         
@@ -307,9 +312,13 @@ public class Game extends JComponent {
         if( brick.y+ brick.height >= player.y){
             if(player.x > bodyOfBlock ){
                   resetPlayer();
+                  
+                  life = life - 1;
             }
                
-            
+            if(life == 0){
+               
+            }
            
         }
         
