@@ -34,27 +34,35 @@ public class Game extends JComponent {
     long desiredFPS = 60;
     long desiredTime = (1000) / desiredFPS;
 
-    //GAME VARIABLES START HERE
+     // YOUR GAME VARIABLES WOULD GO HERE
     
-    private int score = 0;
-    private int life = 3;
+    
+    
+    int score = 0;
+    int life = 3;
 
     Random generator = new Random();
     
+    //Y position for the Brick 
+//     int y = 300;
+     
      //(MAX + 1 - MIN) + MIN
     int randX = generator.nextInt(550 + 1  - 170) +  170;
     
-    //int randY = generator.nextInt();
+     
+
     
+    //BRICKS
+    Rectangle brick = new Rectangle(generator.nextInt(550 + 1  - 170) +  170, 300, 50, 50);
     
-    // YOUR GAME VARIABLES WOULD GO HERE
-    Rectangle player = new Rectangle(395, 585, 50, 10);
+   //PLAYER
+    Rectangle player = new Rectangle(395, 585-100, 50, 10);
     
-    
+    //KEYBOARD BUTTONS
     boolean leftPressed;
     boolean rightPressed;
     
-    int y = 300;
+   
     
     
     
@@ -97,6 +105,9 @@ public class Game extends JComponent {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
+        
+        
+        
         //170 & 650
         //player at 495
         //BORDER
@@ -106,7 +117,7 @@ public class Game extends JComponent {
         
         
         //Barrier Blocks 
-        g.drawRect(randX, y, 50, 50);
+        g.drawRect(randX, brick.y, 50, 50);
         
         //PLAYER
         g.drawRect(player.x, player.y, player.width, player.height);
@@ -116,6 +127,7 @@ public class Game extends JComponent {
         g.setColor(Color.BLACK);
         g.setFont(new Font("serif", Font.BOLD, 25));
         g.drawString("" + score, 590, 30);
+        
         
         
         
@@ -152,23 +164,27 @@ public class Game extends JComponent {
             // GAME LOGIC STARTS HERE 
      
             collisions();
+            hits();
             
-            
+         
             //When left key pressed move to the left 
             if(leftPressed){
                 player.x = player.x - 5;
             }
-            // when right key pressed move to the right 
+            // When right key pressed move to the right 
             if(rightPressed){
                 player.x = player.x + 5;
             } 
             
-            y += 5;
-            //Randomly reset the ball to another location 
-            if(y > HEIGHT){
-                y = 0;
+            //brick speed
+            brick.y += 5;
+            //Randomly reset the brick to another location 
+            if(brick.y> HEIGHT){
+                brick.y = 0;
                 getRandom();
             }
+            
+          
            
             
             // GAME LOGIC ENDS HERE 
@@ -278,17 +294,37 @@ public class Game extends JComponent {
     }
     
     public void hits(){
-       Rectangle brick = new Rectangle(randX, y, 50, 50); 
-        
+  
         if(player.intersects(brick)){
             
-            score = score + 100;
-            
+            System.out.println("test");
+//            resetBrick();
+     
         }
+      
+        
+        int bodyOfBlock = brick.x + brick.width;
+        if( brick.y+ brick.height >= player.y){
+            if(player.x > bodyOfBlock ){
+                  resetPlayer();
+            }
+               
+            
+           
+        }
+        
+       
+//        if(y + brick.height >= player.y){
+//            System.out.println("test2");
+//             resetBrick();
+//        }
+//        
         
     }
     
-    
+    public void resetPlayer(){
+        player.x = 395;
+    }
     
     }
     
