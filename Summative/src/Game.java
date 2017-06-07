@@ -44,19 +44,20 @@ public class Game extends JComponent {
     Random generator = new Random();
     
     //Y position for the Brick 
-//     int y = 300;
+    // int y = 300;
      
      //(MAX + 1 - MIN) + MIN
     int randX = generator.nextInt(550 + 1  - 170) +  170;
     
-     
+    Rectangle[] brick = new Rectangle[5];
 
     
     //BRICKS
-    Rectangle brick = new Rectangle(generator.nextInt(550 + 1  - 170) +  170, 300, 50, 50);
+  
+       
     
    //PLAYER
-    Rectangle player = new Rectangle(395, 585-100, 50, 10);
+    Rectangle player = new Rectangle(395, 585, 50, 10);
     
     //KEYBOARD BUTTONS
     boolean leftPressed;
@@ -107,20 +108,29 @@ public class Game extends JComponent {
         // GAME DRAWING GOES HERE
         
         
-        
         //170 & 650
         //player at 495
         //BORDER
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillRect(150, 0, 20, 600);
         g.fillRect(650, 0, 20, 600);
         
         
+        
+        // use a for loop to go through the array of blocks :)
+        for(int i = 0; i < brick.length; i++){
+            g.fillRect(brick[i].x, brick[i].y, brick[i].width, brick[i].height);
+        }
+        
         //Barrier Blocks 
-        g.drawRect(randX, brick.y, 50, 50);
+       // g.drawRect(randX, brick.y, 50, 50);
+
         
         //PLAYER
         g.drawRect(player.x, player.y, player.width, player.height);
+        
+        
+        
         
         
         //Score
@@ -129,9 +139,15 @@ public class Game extends JComponent {
         g.drawString("" + score, 590, 30);
         
         //Lives
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 25));
+         g.setColor(Color.RED);
+         g.setFont(new Font("Arial", Font.BOLD, 25));
          g.drawString("Lives: " + life, 670, 30);
+         
+         //Game over
+//         g.setColor(Color.RED);
+//         g.setFont(new Font("Arial", Font.BOLD, 30));
+//         g.drawString("GAME OVER", 320, 350);
+//         
         
         
         
@@ -144,10 +160,15 @@ public class Game extends JComponent {
     // This is run before the game loop begins!
     public void  preSetup(){
        // Any of your pre setup before the loop starts should go here
-
        
+       brick[0] = new Rectangle(randX, 350, 50, 50); 
+       brick[1] = new Rectangle(randX, 350, 50, 50); 
+       brick[2] = new Rectangle(randX, 350, 50, 50); 
+       brick[3] = new Rectangle(randX, 350, 50, 50); 
+       brick[4] = new Rectangle(randX, 350, 50, 50); 
+       
+    
     }
-
     // The main game loop
     // In here is where all the logic for my game will go
     public void run() {
@@ -168,6 +189,9 @@ public class Game extends JComponent {
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
      
+//            player.setBounds(player.x , player.y, player.width, player.height);
+//            brick.setBounds(brick.x, brick.y, brick.width, brick.height);
+//            
             collisions();
             hits();
             
@@ -181,18 +205,28 @@ public class Game extends JComponent {
                 player.x = player.x + 5;
             } 
             
+             for(int i = 0; i < brick.length; i++){
             //brick speed
-            brick.y += 5;
+            brick[i].y += 5;
             //Randomly reset the brick to another location 
-            if(brick.y> HEIGHT){
-                brick.y = 0;
+            if(brick[i].y> HEIGHT){
+                brick[i].y = 0;
                 getRandom();
+                //updated brick x 
+                brick[i].x = randX;
             }
+             }
             
           
+            
+            
+            
+            
            
             
             // GAME LOGIC ENDS HERE 
+            
+            
             // update the drawing (calls paintComponent)
             repaint();
 
@@ -299,38 +333,29 @@ public class Game extends JComponent {
     }
     
     public void hits(){
-  
-        if(player.intersects(brick)){
+     for(int i = 0; i < brick.length; i++){
+        if(player.intersects(brick[i])){
+            resetPlayer();
+          
+        }
             
-            System.out.println("test");
-//            resetBrick();
-     
         }
       
-        
-        int bodyOfBlock = brick.x + brick.width;
-        if( brick.y+ brick.height >= player.y){
-            if(player.x > bodyOfBlock ){
-                  resetPlayer();
-                  
-                  life = life - 1;
-            }
-               
-            if(life == 0){
-               
-            }
-           
-        }
-        
-       
-//        if(y + brick.height >= player.y){
-//            System.out.println("test2");
-//             resetBrick();
+ 
+//        int bodyOfBlock = brick.x + brick.width;
+//        if( brick.y+ brick.height >= player.y){
+//            System.out.println("player x " + player.x + " brick x " + brick.x);
+//            if(player.x < brick.x ){
+//                  resetPlayer();
+//                  life = life - 1;
+//            }
+//            if(life == 0){
+//               
+//            }  
 //        }
-//        
         
+
     }
-    
     public void resetPlayer(){
         player.x = 395;
     }
