@@ -336,9 +336,13 @@ public class Game extends JComponent {
      for(int i = 0; i < brick.length; i++){
         if(player.intersects(brick[i])){
             resetPlayer();
+            life = life - 1;
           
         }
+        if(life == 0){    
             
+        }
+        
         }
       
  
