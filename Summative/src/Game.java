@@ -47,7 +47,17 @@ public class Game extends JComponent {
     // int y = 300;
      
      //(MAX + 1 - MIN) + MIN
-    int randX = generator.nextInt(550 + 1  - 170) +  170;
+   int randX = generator.nextInt(550 + 1  - 170) +  170;
+   int randX1 = generator.nextInt(550 + 1  - 170) +  170;
+   int randX2 = generator.nextInt(550 + 1  - 170) +  170;
+   int randX3 = generator.nextInt(550 + 1  - 170) +  170;
+   int randX4 = generator.nextInt(550 + 1  - 170) +  170;
+      
+   int randY = generator.nextInt(550 + 1  - 0) +  0;
+   int randY1 = generator.nextInt(550 + 1  - 0) +  0;
+   int randY2 = generator.nextInt(550 + 1  - 0) +  0;
+   int randY3 = generator.nextInt(550 + 1  - 0) +  0;
+   int randY4 = generator.nextInt(550 + 1  - 0) +  0;
     
     Rectangle[] brick = new Rectangle[5];
 
@@ -122,15 +132,11 @@ public class Game extends JComponent {
             g.fillRect(brick[i].x, brick[i].y, brick[i].width, brick[i].height);
         }
         
-        //Barrier Blocks 
-       // g.drawRect(randX, brick.y, 50, 50);
+        
 
         
         //PLAYER
         g.drawRect(player.x, player.y, player.width, player.height);
-        
-        
-        
         
         
         //Score
@@ -162,10 +168,10 @@ public class Game extends JComponent {
        // Any of your pre setup before the loop starts should go here
        
        brick[0] = new Rectangle(randX, 350, 50, 50); 
-       brick[1] = new Rectangle(randX, 350, 50, 50); 
-       brick[2] = new Rectangle(randX, 350, 50, 50); 
-       brick[3] = new Rectangle(randX, 350, 50, 50); 
-       brick[4] = new Rectangle(randX, 350, 50, 50); 
+       brick[1] = new Rectangle(randX1, 350, 50, 50); 
+       brick[2] = new Rectangle(randX2, 350, 50, 50); 
+       brick[3] = new Rectangle(randX3, 350, 50, 50); 
+       brick[4] = new Rectangle(randX4, 350, 50, 50); 
        
     
     }
@@ -194,8 +200,11 @@ public class Game extends JComponent {
 //            
             collisions();
             hits();
-            
-         
+            stop();
+          
+            //add up score 
+            score = score + 1;
+          
             //When left key pressed move to the left 
             if(leftPressed){
                 player.x = player.x - 5;
@@ -333,14 +342,14 @@ public class Game extends JComponent {
     }
     
     public void hits(){
+        //if the player hits any of the falling bricks
      for(int i = 0; i < brick.length; i++){
         if(player.intersects(brick[i])){
             resetPlayer();
             life = life - 1;
+            score = score - 1000;
           
-        }
-        if(life == 0){    
-            
+       
         }
         
         }
@@ -362,7 +371,25 @@ public class Game extends JComponent {
     }
     public void resetPlayer(){
         player.x = 395;
+         for(int i = 0; i < brick.length; i++){
+        brick[i].y = 0;
+        getRandom();
+         
+         }
     }
+   
+    public void stop(){
+        if(life==0){
+  for(int i = 0; i < brick.length; i++){
+      brick[i].y = 0;
+      score = score + 0;
+      
+  }
+        }
+    }
+    
+    
+    
     
     }
     
