@@ -27,7 +27,7 @@ public class Game extends JComponent {
     static final int HEIGHT = 600;
     
     //Title of the window
-    String title = "My Game";
+    String title = "Brick Dodger";
 
     // sets the framerate and delay for our game
     // you just need to select an approproate framerate
@@ -53,11 +53,11 @@ public class Game extends JComponent {
    int randX3 = generator.nextInt(550 + 1  - 170) +  170;
    int randX4 = generator.nextInt(550 + 1  - 170) +  170;
       
-   int randY = generator.nextInt(550 + 1  - 0) +  0;
-   int randY1 = generator.nextInt(550 + 1  - 0) +  0;
-   int randY2 = generator.nextInt(550 + 1  - 0) +  0;
-   int randY3 = generator.nextInt(550 + 1  - 0) +  0;
-   int randY4 = generator.nextInt(550 + 1  - 0) +  0;
+   int randY = generator.nextInt(200 + 1  - 170) +  170;
+   int randY1 = generator.nextInt(200 + 1  - 170) +  170;
+   int randY2 = generator.nextInt(250 + 1  - 220) +  220;
+   int randY3 = generator.nextInt(250 + 1  - 220) +  220;
+   int randY4 = generator.nextInt(350 + 1  - 300) +  300;
     
     Rectangle[] brick = new Rectangle[5];
 
@@ -166,12 +166,12 @@ public class Game extends JComponent {
     // This is run before the game loop begins!
     public void  preSetup(){
        // Any of your pre setup before the loop starts should go here
-       
-       brick[0] = new Rectangle(randX, 350, 50, 50); 
-       brick[1] = new Rectangle(randX1, 350, 50, 50); 
-       brick[2] = new Rectangle(randX2, 350, 50, 50); 
-       brick[3] = new Rectangle(randX3, 350, 50, 50); 
-       brick[4] = new Rectangle(randX4, 350, 50, 50); 
+       //y == 3
+       brick[0] = new Rectangle(randX, randY, 50, 50); 
+       brick[1] = new Rectangle(randX1, randY1, 50, 50); 
+       brick[2] = new Rectangle(randX2, randY2, 50, 50); 
+       brick[3] = new Rectangle(randX3, randY3, 50, 50); 
+       brick[4] = new Rectangle(randX4, randY4, 50, 50); 
        
     
     }
@@ -347,7 +347,7 @@ public class Game extends JComponent {
         if(player.intersects(brick[i])){
             resetPlayer();
             life = life - 1;
-            score = score - 1000;
+       
           
        
         }
