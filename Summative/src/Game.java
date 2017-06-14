@@ -80,7 +80,7 @@ public class Game extends JComponent {
     
 
     //Image     
-    //BufferedImage blockImg = loadImage("block.png");
+    BufferedImage blockImg = loadImage("ALIEN.PNG");
     
     // GAME VARIABLES END HERE   
 
@@ -141,7 +141,7 @@ public class Game extends JComponent {
 
         //Drawing image
         //g.drawImage(IMAGENAME, X, Y, this);
-       // g.drawImage(blockImg, 585, 50, this);
+        g.drawImage(blockImg, 10, 10, 300, 150, this);
         
         //PLAYER
         g.drawRect(player.x, player.y, player.width, player.height);
