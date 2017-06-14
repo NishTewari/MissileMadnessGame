@@ -11,7 +11,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Random;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -53,17 +56,17 @@ public class Game extends JComponent {
    int randX3 = generator.nextInt(500 + 1  - 370) +  370;
    int randX4 = generator.nextInt(500 + 1  - 370) +  370;
       
-   int randY = generator.nextInt(550 + 1  - 0) +  0;
-   int randY1 = generator.nextInt(550 + 1  - 0) +  0;
-   int randY2 = generator.nextInt(550 + 1  - 0) +  0;
-   int randY3 = generator.nextInt(550 + 1  - 0) +  0;
-   int randY4 = generator.nextInt(550 + 1  - 0) +  0;
+   int randY = generator.nextInt(300 + 1  - 0) +  0;
+   int randY1 = generator.nextInt(300 + 1  - 0) +  0;
+   int randY2 = generator.nextInt(300 + 1  - 0) +  0;
+   int randY3 = generator.nextInt(300 + 1  - 0) +  0;
+   int randY4 = generator.nextInt(300 + 1  - 0) +  0;
     
-    Rectangle[] brick = new Rectangle[5];
+   
 
     
     //BRICKS
-  
+   Rectangle[] brick = new Rectangle[5];
        
     
    //PLAYER
@@ -72,10 +75,12 @@ public class Game extends JComponent {
     //KEYBOARD BUTTONS
     boolean leftPressed;
     boolean rightPressed;
-    
     boolean spacePressed; 
     
     
+
+    //Image     
+    //BufferedImage blockImg = loadImage("block.png");
     
     // GAME VARIABLES END HERE   
 
@@ -134,6 +139,9 @@ public class Game extends JComponent {
         
         
 
+        //Drawing image
+        //g.drawImage(IMAGENAME, X, Y, this);
+       // g.drawImage(blockImg, 585, 50, this);
         
         //PLAYER
         g.drawRect(player.x, player.y, player.width, player.height);
@@ -157,9 +165,11 @@ public class Game extends JComponent {
          g.drawString("GAME OVER", 320, 350);
          
          }
-           
-
-        
+          //Press SpaceBar to start the game  
+         g.setColor(Color.RED);
+         g.setFont(new Font("Arial", Font.BOLD, 30));
+         g.drawString("Press SpaceBar", 320, 350);
+         
         
         // GAME DRAWING ENDS HERE
     }
@@ -176,7 +186,7 @@ public class Game extends JComponent {
        brick[3] = new Rectangle(randX3, randY3, 50, 50); 
        brick[4] = new Rectangle(randX4, randY4, 50, 50); 
        
-    
+      
     }
     // The main game loop
     // In here is where all the logic for my game will go
@@ -200,7 +210,7 @@ public class Game extends JComponent {
      
 //            player.setBounds(player.x , player.y, player.width, player.height);
 //            brick.setBounds(brick.x, brick.y, brick.width, brick.height);
-//            
+           
             collisions();
             hits();
             stop();
@@ -209,15 +219,8 @@ public class Game extends JComponent {
             
              
             
-//          
-//                for (int i = 0; i < brick.length; i++) {
-//                   brick[i].y += 0;
-//                
-//                   if(spacePressed){
-//                       brick[i].y = 5;
-//                   }
-//            }
-            
+         
+               
             
             //add up score 
             score = score + 1;
@@ -233,7 +236,7 @@ public class Game extends JComponent {
             
              for(int i = 0; i < brick.length; i++){
             //brick speed
-            brick[i].y += 5;
+//            brick[i].y += 5;
             //Randomly reset the brick to another location 
             if(brick[i].y> HEIGHT){
                 brick[i].y = 0;
@@ -242,6 +245,16 @@ public class Game extends JComponent {
                 brick[i].x = randX;
             }
              }
+            
+             for (int i = 0; i < brick.length; i++) {
+
+                   if(spacePressed){
+                       brick[i].y += 5;
+                   }
+        }
+            
+            
+             
             
           
             
@@ -270,6 +283,17 @@ public class Game extends JComponent {
             } catch (Exception e) {
             };
         }
+    }
+
+     public static BufferedImage loadImage(String name){
+        BufferedImage img = null;
+        try{
+            img = ImageIO.read(new File(name));
+        }catch(Exception e){
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return img;
     }
 
     
@@ -327,9 +351,9 @@ public class Game extends JComponent {
             if(e.getKeyCode() == KeyEvent.VK_RIGHT){
                 rightPressed = false;
             }
-            if(e.getKeyCode() == KeyEvent.VK_SPACE){
-                spacePressed = false;
-            }
+//            if(e.getKeyCode() == KeyEvent.VK_SPACE){
+//                spacePressed = false;
+//            }
         }
     }
     
@@ -396,9 +420,12 @@ public class Game extends JComponent {
   for(int i = 0; i < brick.length; i++){
       brick[i].y = 0;
       score = score + 0;   
+  }       
+   
+        }   
   }
-        }
-    }
+    
+    
     
     
     }
