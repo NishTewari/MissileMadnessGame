@@ -38,24 +38,33 @@ public class Game extends JComponent {
     long desiredTime = (1000) / desiredFPS;
 
      // YOUR GAME VARIABLES WOULD GO HERE
-    
-    
-    
+    //score
     int score = 0;
+   
+    
+    //Lives
     int life = 3;
 
+    //KEYBOARD BUTTONS
+    boolean leftPressed;
+    boolean rightPressed;
+    boolean spacePressed; 
+    
+    boolean play;
+    
+    //Random number generator 
     Random generator = new Random();
     
-    //Y position for the Brick 
-    // int y = 300;
-     
+
      //(MAX + 1 - MIN) + MIN
+    // Random X genrator 
    int randX = generator.nextInt(250 + 1  - 170) +  170;
    int randX1 = generator.nextInt(250 + 1  - 170) +  170;
    int randX2 = generator.nextInt(350 + 1  - 270) +  270;
    int randX3 = generator.nextInt(500 + 1  - 370) +  370;
    int randX4 = generator.nextInt(500 + 1  - 370) +  370;
-      
+     
+   //Random Y generator 
    int randY = generator.nextInt(300 + 1  - 0) +  0;
    int randY1 = generator.nextInt(300 + 1  - 0) +  0;
    int randY2 = generator.nextInt(300 + 1  - 0) +  0;
@@ -66,19 +75,13 @@ public class Game extends JComponent {
 
     
     //BRICKS
-   Rectangle[] brick = new Rectangle[5];
+    Rectangle[] brick = new Rectangle[5];
        
     
-   //PLAYER
+    //PLAYER
     Rectangle player = new Rectangle(395, 585, 50, 10);
     
-    //KEYBOARD BUTTONS
-    boolean leftPressed;
-    boolean rightPressed;
-    boolean spacePressed; 
-    
-    
-
+ 
     //Image     
     BufferedImage blockImg = loadImage("ALIEN.PNG");
     
@@ -87,7 +90,7 @@ public class Game extends JComponent {
     
     // Constructor to create the Frame and place the panel in
     // You will learn more about this in Grade 12 :)
-    public Game(){
+        public Game(){
         // creates a windows to show my game
         JFrame frame = new JFrame(title);
 
@@ -121,12 +124,10 @@ public class Game extends JComponent {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
+   
         
-        
-        //170 & 650
-        //player at 495
         //BORDER
-        g.setColor(Color.BLUE);
+        g.setColor(Color.BLACK);
         g.fillRect(150, 0, 20, 600);
         g.fillRect(650, 0, 20, 600);
         
@@ -134,16 +135,16 @@ public class Game extends JComponent {
         
         // use a for loop to go through the array of blocks :)
         for(int i = 0; i < brick.length; i++){
+            g.setColor(Color.WHITE);
             g.fillRect(brick[i].x, brick[i].y, brick[i].width, brick[i].height);
         }
-        
-        
-
+ 
         //Drawing image
         //g.drawImage(IMAGENAME, X, Y, this);
-        g.drawImage(blockImg, 10, 10, 300, 150, this);
+        g.drawImage(blockImg, 10, 10, 100, 100, this);
         
         //PLAYER
+        g.setColor(Color.red);
         g.drawRect(player.x, player.y, player.width, player.height);
         
         
@@ -153,7 +154,7 @@ public class Game extends JComponent {
         g.drawString("" + score, 590, 30);
         
         //Lives
-         g.setColor(Color.RED);
+         g.setColor(Color.BLACK);
          g.setFont(new Font("Arial", Font.BOLD, 25));
          g.drawString("Lives: " + life, 670, 30);
          
@@ -166,11 +167,12 @@ public class Game extends JComponent {
          
          }
           //Press SpaceBar to start the game  
+         if(spacePressed == false){
          g.setColor(Color.RED);
          g.setFont(new Font("Arial", Font.BOLD, 30));
          g.drawString("Press SpaceBar", 320, 350);
          
-        
+         }  
         // GAME DRAWING ENDS HERE
     }
 
@@ -179,7 +181,8 @@ public class Game extends JComponent {
     // This is run before the game loop begins!
     public void  preSetup(){
        // Any of your pre setup before the loop starts should go here
-       //y == 3
+        
+       // Seting up bricks 
        brick[0] = new Rectangle(randX, randY, 50, 50); 
        brick[1] = new Rectangle(randX1, randY1, 50, 50); 
        brick[2] = new Rectangle(randX2, randY2, 50, 50); 
@@ -210,18 +213,13 @@ public class Game extends JComponent {
      
 //            player.setBounds(player.x , player.y, player.width, player.height);
 //            brick.setBounds(brick.x, brick.y, brick.width, brick.height);
-           
+            
+           //Methods
             collisions();
             hits();
             stop();
             
-            
-            
-             
-            
-         
-               
-            
+           
             //add up score 
             score = score + 1;
           
@@ -246,22 +244,12 @@ public class Game extends JComponent {
             }
              }
             
-             for (int i = 0; i < brick.length; i++) {
-
+             //when player presses spacebar then the game will start 
+             for (int i = 0; i < brick.length; i++){
                    if(spacePressed){
                        brick[i].y += 5;
                    }
         }
-            
-            
-             
-            
-          
-            
-            
-            
-            
-           
             
             // GAME LOGIC ENDS HERE 
             
@@ -351,13 +339,12 @@ public class Game extends JComponent {
             if(e.getKeyCode() == KeyEvent.VK_RIGHT){
                 rightPressed = false;
             }
-//            if(e.getKeyCode() == KeyEvent.VK_SPACE){
-//                spacePressed = false;
-//            }
+           
         }
     }
     
     public void getRandom(){
+        //creating a random X
         randX = generator.nextInt(625 + 1  - 170) +  170;
     }
     
@@ -408,8 +395,9 @@ public class Game extends JComponent {
         brick[2].y = randY2;
         brick[3].y = randY3;
         brick[4].y = randY4;
-
+  
         getRandom();
+        
          
          }
     }
@@ -419,7 +407,7 @@ public class Game extends JComponent {
         if(life==0){
   for(int i = 0; i < brick.length; i++){
       brick[i].y = 0;
-      score = score + 0;   
+     
   }       
    
         }   
