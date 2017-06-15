@@ -85,6 +85,7 @@ public class Game extends JComponent {
     //Image     
     BufferedImage blockImg = loadImage("ALIEN.PNG");
     
+    
     // GAME VARIABLES END HERE   
 
     
@@ -121,13 +122,15 @@ public class Game extends JComponent {
     @Override
     public void paintComponent(Graphics g) {
         // always clear the screen first!
-        g.clearRect(0, 0, WIDTH, HEIGHT);
+        
+        g.setColor(Color.DARK_GRAY);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
    
         
         //BORDER
-        g.setColor(Color.BLACK);
+        g.setColor(Color.GREEN);
         g.fillRect(150, 0, 20, 600);
         g.fillRect(650, 0, 20, 600);
         
@@ -144,17 +147,17 @@ public class Game extends JComponent {
         g.drawImage(blockImg, 10, 10, 100, 100, this);
         
         //PLAYER
-        g.setColor(Color.red);
+        g.setColor(Color.CYAN);
         g.drawRect(player.x, player.y, player.width, player.height);
         
         
         //Score
-        g.setColor(Color.BLACK);
+        g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 25));
         g.drawString("" + score, 590, 30);
         
         //Lives
-         g.setColor(Color.BLACK);
+         g.setColor(Color.WHITE);
          g.setFont(new Font("Arial", Font.BOLD, 25));
          g.drawString("Lives: " + life, 670, 30);
          
