@@ -30,7 +30,7 @@ public class Game extends JComponent {
     static final int HEIGHT = 600;
     
     //Title of the window
-    String title = "Brick Dodger";
+    String title = "Missile Madness";
 
     // sets the framerate and delay for our game
     // you just need to select an approproate framerate
@@ -83,7 +83,8 @@ public class Game extends JComponent {
     
  
     //Image     
-    BufferedImage blockImg = loadImage("ALIEN.PNG");
+    BufferedImage alienImg = loadImage("ALIEN.PNG");
+    BufferedImage rocketImg = loadImage("rocket.PNG");
     
     
     // GAME VARIABLES END HERE   
@@ -138,23 +139,30 @@ public class Game extends JComponent {
         
         // use a for loop to go through the array of blocks :)
         for(int i = 0; i < brick.length; i++){
-            g.setColor(Color.WHITE);
+            g.setColor(Color.darkGray);
             g.fillRect(brick[i].x, brick[i].y, brick[i].width, brick[i].height);
+            g.drawImage(rocketImg, brick[i].x, brick[i].y, 50, 50, null);
         }
  
         //Drawing image
         //g.drawImage(IMAGENAME, X, Y, this);
-        g.drawImage(blockImg, 10, 10, 100, 100, this);
+        g.drawImage(alienImg, 10, 10, 100, 100, this);
         
         //PLAYER
         g.setColor(Color.CYAN);
-        g.drawRect(player.x, player.y, player.width, player.height);
+  //      g.fillRect(player.x, player.y, player.width, player.height);
+        g.drawImage(alienImg, player.x, player.y - 40, 50, 50, null);
         
+        
+        //Score TITLE
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 25));
+        g.drawString("Score: "  , 670, 70);
         
         //Score
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 25));
-        g.drawString("" + score, 590, 30);
+        g.drawString("" + score, 670, 100);
         
         //Lives
          g.setColor(Color.WHITE);
@@ -166,14 +174,26 @@ public class Game extends JComponent {
          if(life ==0){
          g.setColor(Color.RED);
          g.setFont(new Font("Arial", Font.BOLD, 30));
-         g.drawString("GAME OVER", 320, 350);
+         g.drawString("GAME OVER", 320, 300);
+         
+         // give player their score 
+         g.setColor(Color.RED);
+         g.setFont(new Font("Arial", Font.BOLD, 30));
+         g.drawString("Score: " + score, 320, 335);
          
          }
-          //Press SpaceBar to start the game  
+         
+         //Game Title 
          if(spacePressed == false){
          g.setColor(Color.RED);
          g.setFont(new Font("Arial", Font.BOLD, 30));
-         g.drawString("Press SpaceBar", 320, 350);
+         g.drawString("MISSILE MADNESS", 287, 320);
+         
+         
+          //Press SpaceBar to start the game  
+         g.setColor(Color.ORANGE);
+         g.setFont(new Font("Arial", Font.BOLD, 20));
+         g.drawString("Press SpaceBar", 352, 400);
          
          }  
         // GAME DRAWING ENDS HERE
@@ -186,11 +206,11 @@ public class Game extends JComponent {
        // Any of your pre setup before the loop starts should go here
         
        // Seting up bricks 
-       brick[0] = new Rectangle(randX, randY, 50, 50); 
-       brick[1] = new Rectangle(randX1, randY1, 50, 50); 
-       brick[2] = new Rectangle(randX2, randY2, 50, 50); 
-       brick[3] = new Rectangle(randX3, randY3, 50, 50); 
-       brick[4] = new Rectangle(randX4, randY4, 50, 50); 
+       brick[0] = new Rectangle(randX, randY, 7, 10); 
+       brick[1] = new Rectangle(randX1, randY1, 7, 10); 
+       brick[2] = new Rectangle(randX2, randY2, 7, 10); 
+       brick[3] = new Rectangle(randX3, randY3, 7, 10); 
+       brick[4] = new Rectangle(randX4, randY4, 7, 10); 
        
       
     }
@@ -217,14 +237,17 @@ public class Game extends JComponent {
 //            player.setBounds(player.x , player.y, player.width, player.height);
 //            brick.setBounds(brick.x, brick.y, brick.width, brick.height);
             
+          if(life == 0){
+              done = true;
+          }
+              
+            
            //Methods
             collisions();
             hits();
             stop();
             
            
-            //add up score 
-            score = score + 1;
           
             //When left key pressed move to the left 
             if(leftPressed){
@@ -236,8 +259,7 @@ public class Game extends JComponent {
             } 
             
              for(int i = 0; i < brick.length; i++){
-            //brick speed
-//            brick[i].y += 5;
+   
             //Randomly reset the brick to another location 
             if(brick[i].y> HEIGHT){
                 brick[i].y = 0;
@@ -250,10 +272,23 @@ public class Game extends JComponent {
              //when player presses spacebar then the game will start 
              for (int i = 0; i < brick.length; i++){
                    if(spacePressed){
-                       brick[i].y += 5;
+                       brick[i].y += 5;  
+                       
                    }
-        }
-            
+             }
+                   //only add up score when game starts
+                   if(spacePressed){
+                  //add up score 
+                  score++;
+                   }
+                   // when game ends stop score 
+                    if(done == true){
+                score = score;
+           }
+           
+      
+           
+         
             // GAME LOGIC ENDS HERE 
             
             
@@ -274,6 +309,7 @@ public class Game extends JComponent {
             } catch (Exception e) {
             };
         }
+        
     }
 
      public static BufferedImage loadImage(String name){
