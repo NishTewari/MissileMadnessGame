@@ -146,7 +146,7 @@ public class Game extends JComponent {
  
         //Drawing image
         //g.drawImage(IMAGENAME, X, Y, this);
-        g.drawImage(alienImg, 10, 10, 100, 100, this);
+       
         
         //PLAYER
         g.setColor(Color.CYAN);
