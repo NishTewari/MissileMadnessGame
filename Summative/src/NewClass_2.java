@@ -12,7 +12,7 @@ import java.awt.event.MouseWheelEvent;
 
 /**
  *
- * @author tewan2657
+ * @author Nish Tewari
  */
 public class NewClass_2 extends JComponent {
 
